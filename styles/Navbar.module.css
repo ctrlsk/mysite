@@ -1,0 +1,12 @@
+#mainNav {
+    background-color: rgba(0,0,0,0.9) !important;
+}
+
+.tooltip-custom {
+    border-radius: 4rem;
+    font-size: 40%;
+}
+
+.navicon {
+    padding-right: 30px;
+}
