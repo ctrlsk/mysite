@@ -5,11 +5,13 @@ import { useInView } from "react-intersection-observer";
 import { getBlogs } from "../lib/api";
 import styles from '../styles/Home.module.css';
 import { Navbar } from '../components/navbar';
+import { urlObjectKeys } from "next/dist/next-server/lib/utils";
+import { ContactForm } from "../components/contact";
 
 export default function Home({ blogs, database }) {
   const [ref, inView] = useInView({
-    triggerOnce: false,
-    rootMargin: '-100px 0px',
+    triggerOnce: true,
+    rootMargin: '0px 0px',
   });
 
   return (
@@ -50,32 +52,32 @@ export default function Home({ blogs, database }) {
         
         <section className={styles.experience} id="experience">
           <div className="container text-white">
-            <div className="row g-2">
+            <div className="row g-3">
               <div className="col-sm-4">
-              <motion.div ref={ref} animate={{ y: inView ? 0 : 50, opacity: inView ? 1 : 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
+              <motion.div ref={ref} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0 }}>
                 <div className="col-sm-11 rounded p-5 text-center bg-dark">
-                  <p class="badge text-wrap bg-danger text-white">December 2016 - present</p>
-                  <p><img src="/images/mc.png" height="73px" className="my-4" /></p>
+                  <p class="badge text-wrap bg-light text-dark">December 2016 - present</p>
+                  <p><img src="/images/mc.png" height="73px" width="117px" className="my-4" /></p>
                   <h4>Mastercard</h4>
                   <p className="text-muted mt-3">Senior Analyst, Marketing</p>
                 </div>
               </motion.div>
               </div>
               <div className="col-sm-4">
-              <motion.div ref={ref} animate={{ y: inView ? 0 : 50, opacity: inView ? 1 : 0 }} transition={{ duration: 0.5, delay: 0.6 }}>
+              <motion.div ref={ref} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
                 <div className="col-sm-11 rounded p-5 text-center bg-dark">
-                  <p class="badge text-wrap bg-danger text-light">June 2015 - November 2016</p>
-                  <p><img src="/images/ht.png" height="73px" className="my-4" /></p>
+                  <p class="badge text-wrap bg-light text-dark">June 2015 - November 2016</p>
+                  <p><img src="/images/ht.png" height="73px" width="74px" className="my-4" /></p>
                   <h4>Hindustan Times</h4>
                   <p className="text-muted mt-3">Senior Content Producer</p>
                 </div>
               </motion.div>    
               </div>
               <div className="col-sm-4">
-              <motion.div ref={ref} animate={{ y: inView ? 0 : 50, opacity: inView ? 1 : 0 }} transition={{ duration: 0.5, delay: 1 }}>
+              <motion.div ref={ref} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.4 }}>
                 <div className="col-sm-11 rounded p-5 text-center bg-dark">
-                  <p class="badge fw-bold text-wrap bg-danger text-light">June 2013 - May 2015</p>
-                  <p><img src="/images/mwg.png" height="73px" className="my-4" /></p>
+                  <p class="badge fw-bold text-wrap bg-light text-dark">June 2013 - May 2015</p>
+                  <p><img src="/images/mwg.png" height="73px" width="175" className="my-4" /></p>
                   <h4>Mindworks Global</h4>
                   <p className="text-muted mt-3">Copy Editor</p>
                 </div>
@@ -85,66 +87,88 @@ export default function Home({ blogs, database }) {
           </div>
         </section>
         
-        <section id="contact">
-            <div className="container px-4">
-                <div className="row gx-4 justify-content-center">
-                    <div className="col-lg-8">
-                        <h2>Contact us</h2>
-                        <p className="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero odio fugiat voluptatem dolor, provident officiis, id iusto! Obcaecati incidunt, qui nihil beatae magnam et repudiandae ipsa exercitationem, in, quo totam.</p>
-                    </div>
+        <section className={styles.showcase} id="showcase">
+          <div className="container text-dark">
+            <div className="row g-2 pt-5 align-items-center border-bottom">
+              <div className="col-sm-7">
+                <div className="col-sm-12 rounded p-5 text-left">
+                  <h4 className="display-5">Copy writing & editing</h4>
+                  <p className="text-muted mt-3">Senior Analyst, Marketing</p>
                 </div>
+              </div>
+              <div className="col-sm-5 order-md-1">
+                <div className="col-sm-12 rounded p-5 text-center" style={{ backgroundImage: "url(/images/blob1.png)", backgroundRepeat: "no-repeat", backgroundSize: "contain", backgroundPosition: "center" }}>
+                <motion.div ref={ref} animate={{ y: [-25,0,10,-25] }} transition={{ repeat: Infinity, duration: 10, repeatDelay:.5 }}>
+                  <p><img src="/images/htshowcase.png" height="400px" className="my-4" /></p>
+                </motion.div>
+                </div>
+              </div>
             </div>
+            <div className="row g-2 pt-5 align-items-center border-bottom">
+            <div className="col-sm-5  order-lg-1 order-sm-2">
+                <div className="col-sm-12 rounded p-5 text-center" style={{ backgroundImage: "url(/images/blob2.png)", backgroundRepeat: "no-repeat", backgroundSize: "contain", backgroundPosition: "center" }}>
+                <motion.div ref={ref} animate={{ y: [-25,0,10,-25] }} transition={{ repeat: Infinity, duration: 10, repeatDelay:.5 }}>
+                  <p><img src="/images/invisionshowcase.png" height="400px" className="my-4" /></p>
+                </motion.div>
+                </div>
+              </div>
+              <div className="col-sm-7 order-lg-2 order-sm-1">
+                <div className="col-sm-12 rounded p-5 text-right">
+                  <h4 className="display-5  text-right">Interactive design</h4>
+                  <p className="text-muted mt-3 text-right">Senior Analyst, Marketing</p>
+                </div>
+              </div>
+            </div>
+            <div className="row g-2 pt-5 align-items-center">
+              <div className="col-sm-7">
+                <div className="col-sm-12 rounded p-5 text-left">
+                  <h4 className="display-5">Print design</h4>
+                  <p className="text-muted mt-3">Senior Analyst, Marketing</p>
+                </div>
+              </div>
+              <div className="col-sm-5">
+                <div className="col-sm-12 rounded p-5 text-center" style={{ backgroundImage: "url(/images/blob3.png)", backgroundRepeat: "no-repeat", backgroundSize: "contain", backgroundPosition: "center" }}>
+                <motion.div ref={ref} animate={{ y: [-25,0,10,-25] }} transition={{ repeat: Infinity, duration: 10, repeatDelay:.5 }}>
+                  <p><img src="/images/htshowcase.png" height="400px" className="my-4" /></p>
+                </motion.div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.skills} id="skills">
+          <div className="container text-dark">
+            <div className="row g-2 pt-5 align-items-center">
+              <div className="col-sm-3">
+                <div className="col-sm-12 rounded p-5 text-center">
+                <p><img src="/images/indesign.png" height="100px" /></p>
+                </div>
+              </div>
+              <div className="col-sm-3">
+                <div className="col-sm-12 rounded p-5 text-left">
+                <p><img src="/images/photoshop.png" height="100px" /></p>
+                </div>
+              </div>
+              <div className="col-sm-3">
+                <div className="col-sm-12 rounded p-5 text-left">
+                <p><img src="/images/ceros.png" width="200px" /></p>
+                </div>
+              </div>
+              <div className="col-sm-3">
+                <div className="col-sm-12 rounded p-5 text-left">
+                <p><img src="/images/invision.svg" height="90px" /></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.contact} id="contact">
+          <ContactForm />
         </section>
         
-        <footer className="py-5 bg-dark">
-            <div className="container px-4"><p className="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
-        </footer>
-      <main className="page-container">
-        <div className="main">
-          <h1>
-            Notion API + Tailwind + Next.js
-          </h1>
-        </div>
-        <p>Welcome to my example blog!</p>
-        <p>Technologies used:</p>
-        <ul className="list-disc list-inside">
-          <li className="my-2">
-            <span className="px-2 py-1 bg-yellow-200">Notion API</span> as
-            Markdown backend
-          </li>
-          <li className="mb-2">
-            <span className="px-2 py-1 bg-yellow-200">Tailwind</span> for
-            styling
-          </li>
-          <li>
-            <span className="px-2 py-1 bg-yellow-200">Next.js</span> as
-            framework
-          </li>
-        </ul>
-        <p>
-          Source code can be found on{" "}
-          <a
-            className="underline"
-            href="https://github.com/thomasledoux1/notion-blog"
-          >
-            Github
-          </a>
-        </p>
-        <p>
-          Data comes from{" "}
-          <a className="underline" href={`https://notion.so/${database}`}>
-            Notion
-          </a>
-        </p>
-        <p>
-          Hosted on{" "}
-          <a
-            className="underline"
-            href="https://notion-blog-ruby-kappa.vercel.app/"
-          >
-            Vercel
-          </a>
-        </p>
+        <section>
         <h2 className="my-4 text-xl font-bold md:text-2xl ">Blogs</h2>
         <div className="grid md:grid-cols-2 gap-8">
           {blogs.map(blog => (
@@ -161,7 +185,11 @@ export default function Home({ blogs, database }) {
         </div>
 
         <article></article>
-      </main>
+        </section>
+        <footer className="py-5 bg-dark">
+            <div className="container px-4"><p className="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
+        </footer>
+      
     </>
   );
 }
