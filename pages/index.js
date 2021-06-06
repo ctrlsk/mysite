@@ -138,28 +138,28 @@ export default function Home({ blogs, database }) {
         </section>
 
         <section className={styles.skills} id="skills">
-          <div className="container text-dark">
-            <div className="row g-2 pt-5 align-items-center">
-              <div className="col-sm-3">
-                <div className="col-sm-12 rounded p-5 text-center">
+        <div className="col-md-8 text-dark pt-4">
+          <div className="col-md-12">
+            <div className="row align-items-center">
+              <div className="col-md-2">
                 <p><img src="/images/indesign.png" height="100px" /></p>
-                </div>
               </div>
-              <div className="col-sm-3">
-                <div className="col-sm-12 rounded p-5 text-left">
+              <div className="col-md-2">
                 <p><img src="/images/photoshop.png" height="100px" /></p>
-                </div>
               </div>
-              <div className="col-sm-3">
-                <div className="col-sm-12 rounded p-5 text-left">
-                <p><img src="/images/ceros.png" width="200px" /></p>
-                </div>
+              <div className="col-md-2">
+                <p><img src="/images/invision.svg" height="85px" /></p>
               </div>
-              <div className="col-sm-3">
-                <div className="col-sm-12 rounded p-5 text-left">
-                <p><img src="/images/invision.svg" height="90px" /></p>
-                </div>
+              <div className="col-md-2">
+                <p><img src="/images/html.png" height="100px" /></p>
               </div>
+              <div className="col-md-2">
+                <p><img src="/images/css.png" height="100px" /></p>
+              </div>
+              <div className="col-md-2">
+                <p><img src="/images/ceros.png" width="150px" /></p>
+              </div>
+            </div>
             </div>
           </div>
         </section>

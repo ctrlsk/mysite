@@ -1,132 +1,85 @@
-import { useState, useReducer } from 'react';
-import emailjs from 'emailjs-com';
-import ReCAPTCHA from 'react-google-recaptcha';
+import { useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
-const initialState = {
-  name: '',
-  email: '',
-  message: '',
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case 'name':
-      return { ...state, name: action.value };
-    case 'email':
-      return { ...state, email: action.value };
-    case 'message':
-      return { ...state, message: action.value };
-    default:
-      throw new Error();
-  }
-}
+library.add(faEnvelope)
 
 export const ContactForm = () => {
-  const [formState, dispatch] = useReducer(reducer, initialState);
-  const [showFormErr, setShowFormErr] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState({ title: '', paragraph: '' });
-  const [showCaptcha, setShowCaptcha] = useState(false);
-  const { name, email, message } = formState;
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+  const [submitted, setSubmitted] = useState(false)
 
-  const submitFormAndShowCaptcha = (e) => {
-    e.preventDefault();
-    setShowCaptcha(true);
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log('Sending')
 
-  const sendEmail = (captchaValue) => {
-    if (name === '' || email === '' || message === '') {
-      setShowFormErr(true);
-      return;
+    let data = {
+        name,
+        email,
+        message
     }
 
-    const params = {
-      ...formState,
-      'g-recaptcha-response': captchaValue,
-    };
-
-    setFormSubmitted({ title: 'Sending message...', paragraph: '' });
-    emailjs.send(
-      process.env.EMAIL_JS_SERVICE,
-      process.env.EMAIL_JS_TEMPLATE,
-      params,
-      process.env.EMAIL_JS_USER,
-    )
-      .then(({ status }) => {
-        if (status === 200) {
-          setFormSubmitted({ title: 'Message has been sent', paragraph: 'Mike will be in contact with you soon.' });
-        } else {
-          setFormSubmitted({ title: 'Unexpected status code returned from EmailJS, try again later', paragraph: 'Please contact Mike either by phone or email.' });
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then((res) => {
+        console.log('Response received')
+        if (res.status === 200) {
+            console.log('Response succeeded!')
+            setSubmitted(true) 
+            setName('')
+            setEmail('')
+            setMessage('')
         }
-      }, (err) => {
-        // eslint-disable-next-line no-console
-        console.log(err);
-        setFormSubmitted({ title: 'Error sending message, try again later', paragraph: 'Please contact Mike either by phone or email.' });
-      });
-  };
+    })
+  }
 
-  return formSubmitted.title === '' ? (
-    <div>
-      <h3 className="text-lato text-2xl font-light text-white">Send me a message</h3>
-      {!showCaptcha ? (
-        <form onSubmit={submitFormAndShowCaptcha}>
-          <div className="flex font-open-sans justify-start flex-col sm:flex-row">
-            <div className="sm:mr-4 w-100 sm:w-1/2 md:w-2/5 flex flex-col items-end">
-              <label className="block text-gray-500 font-bold my-2 w-full" htmlFor="contact-form-name">
-                Name:
-                <input
-                  id="contact-form-name"
-                  className="appearance-none border-2 border-gray-200 rounded w-full p-2 text-gray-700 leading-tight focus:outline-none focus:border-theme-green"
-                  type="text"
-                  value={name}
-                  onChange={(e) => dispatch({ type: 'name', value: e.target.value })}
-                  required
-                />
-              </label>
-              <label className="block text-gray-500 font-bold my-2 w-full" htmlFor="contact-form-email">
-                Email:
-                <input
-                  id="contact-form-email"
-                  className="appearance-none border-2 border-gray-200 rounded w-full p-2 text-gray-700 leading-tight focus:outline-none focus:border-theme-green"
-                  type="email"
-                  value={email}
-                  onChange={(e) => dispatch({ type: 'email', value: e.target.value })}
-                  required
-                />
-              </label>
-            </div>
-            <div className="sm:mx-4 w-full sm:w-1/2 md:w-3/5">
-              <label className="block text-gray-500 font-bold my-2" htmlFor="contact-form-message">
-                Message:
-                <textarea
-                  rows="5"
-                  id="contact-form-message"
-                  className="appearance-none border-2 border-gray-200 rounded w-full p-2 text-gray-700 leading-tight focus:outline-none focus:border-theme-green"
-                  type="text"
-                  value={message}
-                  onChange={(e) => dispatch({ type: 'message', value: e.target.value })}
-                  required
-                />
-              </label>
-            </div>
+  return (
+    <div className="col-md-8 text-dark">
+    <div className="row">
+    
+      <div class="col-md-12"> 
+      <form>
+
+      <div className="row">
+        <formGroup className="col-md-6" >
+        <div class="form">
+          < label htmlFor='name'>Name</label>
+          < input type='text' onChange={(e)=>{setName(e.target.value)}} name='name' className="form-control" />
+        </div>
+        </formGroup>
+
+        <formGroup className="col-md-6" >
+        <div class="form">
+          < label htmlFor='email'>Email</label>
+          < input type='email' onChange={(e)=>{setEmail(e.target.value)}} name='email' className="form-control" />
+        </div>
+        </formGroup>
+      </div>
+
+      <div className="row pt-4">
+        < formGroup className="col-md-12">
+          <div className="form">
+          < label htmlFor='message'>Message</label>
+          < textarea onChange={(e)=>{setMessage(e.target.value)}} name='message' className="form-control" rows="3" />
           </div>
-          <div className="w-full flex justify-end items-center flex-col sm:flex-row">
-            {showFormErr ? <p className="sm:mr-4 text-red-400">Please fill in all three input boxes to send a message</p> : null}
-            <button className="bg-theme-green text-white py-2 px-4 mt-6 sm:mr-4 rounded focus:outline-none focus:shadow-outline w-full md:w-1/4 lg:w-1/5" type="submit">
-              Send
-            </button>
-          </div>
-        </form>
-      ) : (
-        <ReCAPTCHA
-          sitekey={process.env.CAPTCHA_SITE_KEY}
-          onChange={sendEmail}
-        />
-      )}
+        </formGroup>
+      </div>
+
+      <div className="text-center text-md-left pt-5">
+        < input className="btn btn-lg btn-danger" type='submit' onClick={(e)=>{handleSubmit(e)}}/>
+      </div>
+      </form >
     </div>
-  ) : (
-    <div className="flex flex-col items-center">
-      <h3 className="text-lato text-2xl font-light text-white">{formSubmitted.title}</h3>
-      <p>{formSubmitted.paragraph}</p>
+
+    
+    </div>
     </div>
   );
 }
