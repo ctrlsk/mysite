@@ -11,7 +11,7 @@ export const ContactForm = () => {
   const [message, setMessage] = useState('')
   const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     console.log('Sending')
 
@@ -21,7 +21,7 @@ export const ContactForm = () => {
         message
     }
 
-    fetch('/api/contact', {
+    fetch ('/api/contact', {
       method: 'POST',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -48,28 +48,28 @@ export const ContactForm = () => {
       <form>
 
       <div className="row">
-        <formGroup className="col-md-6" >
+        <formgroup className="col-md-6" >
         <div class="form">
           < label htmlFor='name'>Name</label>
           < input type='text' onChange={(e)=>{setName(e.target.value)}} name='name' className="form-control" />
         </div>
-        </formGroup>
+        </formgroup>
 
-        <formGroup className="col-md-6" >
+        <formgroup className="col-md-6" >
         <div class="form">
           < label htmlFor='email'>Email</label>
           < input type='email' onChange={(e)=>{setEmail(e.target.value)}} name='email' className="form-control" />
         </div>
-        </formGroup>
+        </formgroup>
       </div>
 
       <div className="row pt-4">
-        < formGroup className="col-md-12">
+        < formgroup className="col-md-12">
           <div className="form">
           < label htmlFor='message'>Message</label>
           < textarea onChange={(e)=>{setMessage(e.target.value)}} name='message' className="form-control" rows="3" />
           </div>
-        </formGroup>
+        </formgroup>
       </div>
 
       <div className="text-center text-md-left pt-5">
