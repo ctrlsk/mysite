@@ -6,8 +6,12 @@ export default async function (req, res) {
       port: 465,     
       host: "smtp.gmail.com",
          auth: {
-              user: 'shashankk.work@gmail.com',
-              pass: `${process.env.password}`,
+          type: 'OAuth2',
+          user: 'shashank8kumar@gmail.com',
+          clientId: '332811650288-26p5aq04m2dgt3encpjk0a1tvbfjtm3g.apps.googleusercontent.com',
+          clientSecret: 'yEePfuQBLbCYjoXmzR5-OwSt',
+          refreshToken: '1//04lPyornMQPhfCgYIARAAGAQSNwF-L9IrKcqNkykNGVGJBXTL-xiyy-DsQRHSC7h1Bz5CPz-lJyBJHm7FSHr0E-d6MBYNXum7kkY',
+          expires: 1484314697598
            },
       secure: true,
     });
