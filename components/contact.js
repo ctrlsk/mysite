@@ -23,6 +23,7 @@ export const ContactForm = () => {
 
     fetch ('/api/contact', {
       method: 'POST',
+      mode: 'cors',
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
